@@ -18,6 +18,8 @@ bullet_scene = ExtResource("2_hqtel")
 texture = ExtResource("3_sweqy")
 
 [node name="Area2D" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(-0.5, 0)

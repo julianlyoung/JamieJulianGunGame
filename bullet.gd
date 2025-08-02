@@ -3,6 +3,7 @@ class_name Bullet
 
 @export var speed: float = 400.0
 var direction: Vector2 = Vector2.ZERO
+var shooter: CharacterBody2D = null  # Reference to the player who shot this bullet
 
 func _physics_process(delta: float) -> void:
 	position += direction * speed * delta

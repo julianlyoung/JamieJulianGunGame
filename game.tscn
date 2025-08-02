@@ -1,11 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://b3y10a5jp3i1a"]
+[gd_scene load_steps=8 format=3 uid="uid://b3y10a5jp3i1a"]
 
+[ext_resource type="Script" uid="uid://bfqb8tg57yul8" path="res://game.gd" id="1_7jktm"]
 [ext_resource type="PackedScene" uid="uid://nueeyp77c7qi" path="res://player.tscn" id="1_80nbo"]
 [ext_resource type="Texture2D" uid="uid://df145u77owjkm" path="res://images/map.jpg" id="1_e2o6t"]
 [ext_resource type="Texture2D" uid="uid://bb1ix8nyab6o0" path="res://images/player2.png" id="3_fc0e3"]
 [ext_resource type="Texture2D" uid="uid://lfcks073b5pw" path="res://images/player1.png" id="4_7jktm"]
+[ext_resource type="Texture2D" uid="uid://cikmgtm8nfssf" path="res://images/player2dead.png" id="5_eow3j"]
+[ext_resource type="Texture2D" uid="uid://bhqiydjscu6ls" path="res://images/player1dead.png" id="7_j5wjh"]
 
-[node name="Node2D" type="Node2D"]
+[node name="Game" type="Node2D"]
+script = ExtResource("1_7jktm")
+rounds_to_win = 3
 
 [node name="TextureRect" type="TextureRect" parent="."]
 offset_left = -3.0
@@ -18,6 +23,7 @@ expand_mode = 1
 [node name="Player2" parent="." instance=ExtResource("1_80nbo")]
 position = Vector2(220, 108)
 sprite_texture = ExtResource("3_fc0e3")
+death_sprite_texture = ExtResource("5_eow3j")
 move_left_action = "P2Left"
 move_right_action = "P2Right"
 move_up_action = "P2Up"
@@ -28,9 +34,33 @@ reload_action = "P2Reload"
 [node name="Player" parent="." instance=ExtResource("1_80nbo")]
 position = Vector2(99, 108)
 sprite_texture = ExtResource("4_7jktm")
+death_sprite_texture = ExtResource("7_j5wjh")
 move_left_action = "P1Left"
 move_right_action = "P1Right"
 move_up_action = "P1Up"
 move_down_action = "P1Down"
 fire_action = "P1Fire"
 reload_action = "P1Reload"
+
+[node name="ScoreLabel" type="Label" parent="."]
+offset_left = -3.0
+offset_top = 2.0
+offset_right = 324.0
+offset_bottom = 25.0
+horizontal_alignment = 1
+
+[node name="RoundLabel" type="Label" parent="."]
+offset_left = -3.0
+offset_top = 56.0
+offset_right = 325.0
+offset_bottom = 135.0
+theme_override_font_sizes/font_size = 50
+horizontal_alignment = 1
+
+[node name="CountdownLabel" type="Label" parent="."]
+offset_left = -3.0
+offset_top = 143.0
+offset_right = 325.0
+offset_bottom = 187.0
+horizontal_alignment = 1
+vertical_alignment = 1
