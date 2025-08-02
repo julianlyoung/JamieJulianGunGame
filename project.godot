@@ -11,9 +11,9 @@ config_version=5
 [application]
 
 config/name="PistolsAndShields"
-run/main_scene="uid://b3y10a5jp3i1a"
+run/main_scene="uid://bq4of25ui1kkb"
 config/features=PackedStringArray("4.4", "Forward Plus")
-boot_splash/image="res://images/splash.png"
+boot_splash/image="uid://dsaov22lg1w7j"
 config/icon="res://icon.svg"
 
 [display]

@@ -1,10 +1,258 @@
-[gd_scene load_steps=2 format=3 uid="uid://bq4of25ui1kkb"]
+[gd_scene load_steps=18 format=3 uid="uid://bq4of25ui1kkb"]
 
+[ext_resource type="Script" uid="uid://dh3n6m4lclx8" path="res://start.gd" id="1_4a3qj"]
 [ext_resource type="Texture2D" uid="uid://cn1lbx6pfh33v" path="res://images/splash.png" id="1_ots34"]
+[ext_resource type="Texture2D" uid="uid://ddr0egye41vfu" path="res://images/pixelbullethole.png" id="2_oiuna"]
+[ext_resource type="AudioStream" uid="uid://co1g7pedaoxd2" path="res://sounds/intro-gunshot.mp3" id="3_4a3qj"]
+[ext_resource type="AudioStream" uid="uid://shgro1cq67vm" path="res://sounds/intro-gunshot2.mp3" id="4_g38d0"]
+[ext_resource type="AudioStream" uid="uid://bjsgn3yg02wqt" path="res://music/western-duel-165284.mp3" id="5_pob1m"]
+[ext_resource type="AudioStream" uid="uid://bvkm6oudc6320" path="res://sounds/train-1-99265.mp3" id="6_g38d0"]
+
+[sub_resource type="Animation" id="Animation_qn1rc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control/credits:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(336, 155)]
+}
+
+[sub_resource type="Animation" id="Animation_ots34"]
+resource_name = "scroll_credits"
+length = 20.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control/credits:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 20),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(400, 155), Vector2(-496, 155)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1n0d2"]
+_data = {
+&"RESET": SubResource("Animation_qn1rc"),
+&"scroll_credits": SubResource("Animation_ots34")
+}
+
+[sub_resource type="Animation" id="Animation_p0nl4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control/starttext:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_gophc"]
+resource_name = "fade"
+length = 4.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control/starttext:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2.00132, 4),
+"transitions": PackedFloat32Array(1, 0.659755, 0.659755),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_da165"]
+_data = {
+&"RESET": SubResource("Animation_p0nl4"),
+&"fade": SubResource("Animation_gophc")
+}
+
+[sub_resource type="Animation" id="Animation_r8ukj"]
+resource_name = "Intro"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Control/starttext:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1.01699, 1.23333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-360, 121), Vector2(1, 122)]
+}
+tracks/2/type = "audio"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GunshotIntro")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("3_4a3qj")
+}],
+"times": PackedFloat32Array(0.866667)
+}
+tracks/2/use_blend = true
+tracks/3/type = "audio"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("GunshotIntro2")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("4_g38d0")
+}],
+"times": PackedFloat32Array(1.4)
+}
+tracks/3/use_blend = true
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Pixelbullethole:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 1.46667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_1colc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Control/starttext:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 122)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Pixelbullethole:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("TransitionOut:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(324, -8)]
+}
+
+[sub_resource type="Animation" id="Animation_pob1m"]
+resource_name = "Start"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TransitionOut:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(324, -8), Vector2(0, -8)]
+}
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Train")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("6_g38d0")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/1/use_blend = true
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hwiky"]
+_data = {
+&"Intro": SubResource("Animation_r8ukj"),
+&"RESET": SubResource("Animation_1colc"),
+&"Start": SubResource("Animation_pob1m")
+}
 
 [node name="Start" type="Node2D"]
+script = ExtResource("1_4a3qj")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 337.0
+offset_bottom = 188.0
+color = Color(0, 0, 0, 1)
 
 [node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0)
 offset_right = 331.0
 offset_bottom = 181.0
 texture = ExtResource("1_ots34")
@@ -18,23 +266,23 @@ offset_bottom = 182.0
 
 [node name="credits" type="Label" parent="Control"]
 layout_mode = 0
-offset_left = -65.0
-offset_top = 154.0
-offset_right = 378.0
-offset_bottom = 172.0
+offset_left = 336.0
+offset_top = 155.0
+offset_right = 907.0
+offset_bottom = 173.0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 12
-text = "Music by Anastasia Chubarova from Pixabay   |  Graphics Jamie-Lee Martin  |  Coding Julian Young"
+text = "Graphics Jamie-Lee Martin  |  Coding Julian Young  |  Music by Anastasia Chubarova & Gvidon Levkin/Bardyuzha from Pixabay"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="starttext" type="Label" parent="Control"]
 layout_mode = 0
-offset_left = 1.0
-offset_top = 122.0
-offset_right = 330.0
-offset_bottom = 142.0
+offset_left = -360.0
+offset_top = 121.0
+offset_right = -31.0
+offset_bottom = 141.0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 23
@@ -42,4 +290,42 @@ text = "JOY1 FIRE TO START"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="CreditScroller" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_1n0d2")
+}
+autoplay = "scroll_credits"
+
+[node name="StartFader" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_da165")
+}
+autoplay = "fade"
+
+[node name="Pixelbullethole" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(177, 51)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_oiuna")
+
+[node name="GunshotIntro" type="AudioStreamPlayer" parent="."]
+
+[node name="GunshotIntro2" type="AudioStreamPlayer" parent="."]
+
+[node name="Intro" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_hwiky")
+}
+autoplay = "Intro"
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_pob1m")
+
+[node name="TransitionOut" type="ColorRect" parent="."]
+offset_left = 324.0
+offset_top = -8.0
+offset_right = 653.0
+offset_bottom = 189.0
+color = Color(0, 0, 0, 1)
+
+[node name="Train" type="AudioStreamPlayer" parent="."]

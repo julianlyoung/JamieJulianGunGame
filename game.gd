@@ -11,8 +11,8 @@ signal game_ended(winner_player_number: int)
 @export var game_restart_countdown: float = 5.0
 
 # Game state
-enum GameState { WAITING, ROUND_STARTING, FIGHTING, ROUND_ENDING, GAME_OVER, RESTARTING }
-var current_state: GameState = GameState.WAITING
+enum GameState { WAITING, ROUND_STARTING, FIGHTING, ROUND_ENDING, GAME_OVER, RESTARTING, START_ANIMATION }
+var current_state: GameState = GameState.START_ANIMATION
 var current_round: int = 1
 var player1_score: int = 0
 var player2_score: int = 0
@@ -29,6 +29,9 @@ var player2: CharacterBody2D
 # PowerUp spawner reference
 var powerup_spawner: PowerUpSpawner
 
+# Animation player reference
+var start_animation: AnimationPlayer
+
 # Timers
 var state_timer: float = 0.0
 
@@ -42,8 +45,17 @@ func _ready() -> void:
 	# Create powerup spawner
 	setup_powerup_spawner()
 	
-	# Start first round
-	await get_tree().process_frame  # Wait one frame for everything to be ready
+	# Play start animation
+	if start_animation:
+		start_animation.play("Start")
+		await start_animation.animation_finished
+		$Music.play()
+	else:
+		# If no animation player, just wait a moment
+		await get_tree().create_timer(0.5).timeout
+	
+	# Start first round after animation
+	current_state = GameState.WAITING
 	start_new_round()
 
 func find_game_elements() -> void:
@@ -55,6 +67,9 @@ func find_game_elements() -> void:
 	# Find players
 	player1 = get_node("Player") as CharacterBody2D
 	player2 = get_node("Player2") as CharacterBody2D
+	
+	# Find animation player
+	start_animation = get_node_or_null("StartAnimation") as AnimationPlayer
 
 func setup_powerup_spawner() -> void:
 	# Create powerup spawner node

@@ -2,19 +2,12 @@ extends Node2D
 class_name PowerUpSpawner
 
 @export var powerup_scene: PackedScene
-@export var spawn_positions: Array[Vector2] = [
-	Vector2(80, 50),   # Top left
-	Vector2(240, 50),  # Top right
-	Vector2(80, 130),  # Bottom left
-	Vector2(240, 130), # Bottom right
-	Vector2(160, 90)   # Center
-]
-@export var initial_spawn_delay: float = 5.0
-@export var spawn_interval: float = 20.0
+@export var spawn_interval_min: float = 15.0
+@export var spawn_interval_max: float = 30.0
 
 var spawn_timer: float = 0.0
 var rng: RandomNumberGenerator = RandomNumberGenerator.new()
-var active_powerups: Array[PowerUp] = []
+var current_powerup: PowerUp = null
 
 # Import the PowerUpType enum
 enum PowerUpType {
@@ -26,26 +19,24 @@ enum PowerUpType {
 
 func _ready() -> void:
 	rng.randomize()
-	spawn_timer = initial_spawn_delay
+	# Set initial spawn timer to random interval
+	spawn_timer = rng.randf_range(spawn_interval_min, spawn_interval_max)
 
 func _process(delta: float) -> void:
 	spawn_timer -= delta
 	
 	if spawn_timer <= 0:
 		spawn_powerup()
-		spawn_timer = spawn_interval
+		# Reset timer with random interval
+		spawn_timer = rng.randf_range(spawn_interval_min, spawn_interval_max)
 
 func spawn_powerup() -> void:
 	if not powerup_scene:
 		return
 	
-	# Choose random spawn position
-	var spawn_pos = spawn_positions[rng.randi() % spawn_positions.size()]
-	
-	# Check if position is already occupied
-	for powerup in active_powerups:
-		if powerup and is_instance_valid(powerup) and powerup.global_position.distance_to(spawn_pos) < 20:
-			return  # Don't spawn on top of existing powerup
+	# Don't spawn if one already exists
+	if current_powerup and is_instance_valid(current_powerup):
+		return
 	
 	# Create powerup
 	var powerup: PowerUp = powerup_scene.instantiate() as PowerUp
@@ -54,17 +45,18 @@ func spawn_powerup() -> void:
 	var types = [PowerUpType.RAPID_FIRE, PowerUpType.LASER_SIGHT, PowerUpType.SHIELD, PowerUpType.BIG_MAG]
 	powerup.powerup_type = types[rng.randi() % types.size()]
 	
-	# Set position and add to scene
+	# Add to scene
 	add_child(powerup)
-	powerup.global_position = spawn_pos
-	active_powerups.append(powerup)
 	
-	# Clean up null references
-	active_powerups = active_powerups.filter(func(p): return p != null and is_instance_valid(p))
+	# Set up movement (randomly from top or bottom)
+	var from_top = rng.randf() > 0.5
+	powerup.setup_movement(from_top)
+	
+	current_powerup = powerup
 
 func clear_all_powerups() -> void:
-	for powerup in active_powerups:
-		if powerup and is_instance_valid(powerup):
-			powerup.queue_free()
-	active_powerups.clear()
-	spawn_timer = initial_spawn_delay
+	if current_powerup and is_instance_valid(current_powerup):
+		current_powerup.queue_free()
+	current_powerup = null
+	# Reset timer
+	spawn_timer = rng.randf_range(spawn_interval_min, spawn_interval_max)

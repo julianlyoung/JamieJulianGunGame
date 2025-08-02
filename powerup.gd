@@ -11,22 +11,16 @@ enum PowerUpType {
 
 @export var powerup_type: PowerUpType = PowerUpType.RAPID_FIRE
 @export var duration: float = 10.0
-@export var respawn_time: float = 15.0
-@export var float_amplitude: float = 5.0
-@export var float_speed: float = 2.0
+@export var move_speed: float = 50.0  # Speed for moving across screen
 
-var time_passed: float = 0.0
 var collected: bool = false
-var initial_position: Vector2
+var move_direction: int = 0  # 1 for down, -1 for up
 
 # Visual components
 var sprite: Sprite2D
 var particles: CPUParticles2D
 
 func _ready() -> void:
-	# Store initial position
-	initial_position = global_position
-	
 	# Cache components
 	sprite = $Sprite2D as Sprite2D
 	particles = $CPUParticles2D as CPUParticles2D
@@ -65,15 +59,19 @@ func _physics_process(delta: float) -> void:
 	if collected:
 		return
 	
-	time_passed += delta
-	
-	# Float up and down
-	var offset = sin(time_passed * float_speed) * float_amplitude
-	global_position.y = initial_position.y + offset
+	# Move across screen
+	global_position.y += move_direction * move_speed * delta
 	
 	# Rotate slowly
 	if sprite:
 		sprite.rotation_degrees += 90 * delta
+	
+	# Check if off screen and remove
+	var viewport_size = get_viewport().get_visible_rect().size
+	if move_direction > 0 and global_position.y > viewport_size.y + 20:
+		queue_free()
+	elif move_direction < 0 and global_position.y < -20:
+		queue_free()
 
 func _on_area_entered(area: Area2D) -> void:
 	if collected:
@@ -85,22 +83,19 @@ func _on_area_entered(area: Area2D) -> void:
 		# Give powerup to player
 		player.add_powerup(powerup_type, duration)
 		
-		# Visual feedback
+		# Visual feedback and removal
 		collected = true
-		if sprite:
-			sprite.visible = false
-		if particles:
-			particles.emitting = false
-		
-		# Start respawn timer
-		await get_tree().create_timer(respawn_time).timeout
-		_respawn()
+		queue_free()
 
-func _respawn() -> void:
-	collected = false
-	global_position = initial_position
+func setup_movement(start_from_top: bool) -> void:
+	var viewport_size = get_viewport().get_visible_rect().size
 	
-	if sprite:
-		sprite.visible = true
-	if particles:
-		particles.emitting = true
+	if start_from_top:
+		global_position.y = -20
+		move_direction = 1  # Move down
+	else:
+		global_position.y = viewport_size.y + 20
+		move_direction = -1  # Move up
+	
+	# Always spawn at horizontal center
+	global_position.x = 160  # Center of 320 width screen

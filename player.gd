@@ -46,6 +46,10 @@ var reload_timer: float = 0.0
 var reloading: bool = false
 var fire_cooldown: float = 0.0
 
+# ─── Health System ────────────────────────────────────────────────
+var health: int = 2
+var base_max_speed: float = 200.0  # Store original speed
+
 # ─── Aiming State ────────────────────────────────────────────────
 var current_aim_angle: float = 0.0  # -22.5 to 22.5 degrees
 var aim_direction: Vector2 = Vector2.RIGHT
@@ -87,9 +91,10 @@ func _ready() -> void:
 	# Initialize RNG
 	rng.randomize()
 	
-	# Store initial position
+	# Store initial position and base speed
 	initial_position = global_position
 	original_max_ammo = max_ammo
+	base_max_speed = max_speed
 	
 	# Cache nodes
 	sprite = $Sprite2D as Sprite2D
@@ -113,7 +118,7 @@ func _ready() -> void:
 	if laser_sight:
 		laser_sight.visible = false
 		laser_sight.default_color = Color(1, 0, 0, 0.5)
-		laser_sight.width = 2.0
+		laser_sight.width = 1.0  # Thinner laser line
 	
 	# Connect area signal for hit detection
 	if area_2d:
@@ -331,21 +336,37 @@ func take_hit(bullet: Bullet = null) -> void:
 	if not alive:
 		return
 	
-	alive = false
-	can_move = false
+	health -= 1
 	
-	# Launch appropriate item based on player
-	if player_number == 1 and gun_scene:
-		_launch_gun(bullet)
-	elif player_number == 2 and hat_scene:
-		_launch_hat(bullet)
+	if health > 0:
+		# First hit - reduce speed by 25%
+		max_speed = base_max_speed * 0.75
+		# Visual feedback for hit (flash red briefly)
+		if sprite:
+			sprite.modulate = Color(1, 0.5, 0.5)
+			await get_tree().create_timer(0.1).timeout
+			sprite.modulate = Color.WHITE
+	else:
+		# Player dies
+		alive = false
+		can_move = false
+		
+		# Launch appropriate item based on player
+		if player_number == 1 and gun_scene:
+			_launch_gun(bullet)
+		elif player_number == 2 and hat_scene:
+			_launch_hat(bullet)
+		
+		# Play death animation (simple fade out)
+		_play_death_animation()
+		
+		# Emit death signal
+		player_died.emit()
+		$DeadPlayer.play()
 	
-	# Play death animation (simple fade out)
-	_play_death_animation()
-	
-	# Emit death signal
-	player_died.emit()
-	$DeadPlayer.play()
+	# Destroy the bullet
+	if bullet:
+		bullet.queue_free()
 
 func _launch_gun(bullet: Bullet = null) -> void:
 	var gun: Gun = gun_scene.instantiate() as Gun
@@ -381,6 +402,8 @@ func reset_for_new_round() -> void:
 	ammo_count = max_ammo
 	fire_cooldown = 0.0
 	current_aim_angle = 0.0
+	health = 2  # Reset health
+	max_speed = base_max_speed  # Reset speed
 	
 	# Clear all powerups
 	active_powerups.clear()
@@ -398,6 +421,7 @@ func reset_for_new_round() -> void:
 	# Reset sprite to alive texture
 	if sprite_texture and sprite:
 		sprite.texture = sprite_texture
+		sprite.modulate = Color.WHITE  # Reset color
 	if gun_sprite:
 		gun_sprite.visible = true
 		gun_sprite.rotation_degrees = 0

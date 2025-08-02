@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://b3y10a5jp3i1a"]
+[gd_scene load_steps=17 format=3 uid="uid://b3y10a5jp3i1a"]
 
 [ext_resource type="Script" uid="uid://bfqb8tg57yul8" path="res://game.gd" id="1_7jktm"]
 [ext_resource type="PackedScene" uid="uid://nueeyp77c7qi" path="res://player.tscn" id="1_80nbo"]
@@ -10,7 +10,94 @@
 [ext_resource type="PackedScene" uid="uid://8gt3sdh001m5" path="res://gun.tscn" id="7_hve3p"]
 [ext_resource type="Texture2D" uid="uid://bhqiydjscu6ls" path="res://images/player1dead.png" id="7_j5wjh"]
 [ext_resource type="AudioStream" uid="uid://d4a441ngj16o6" path="res://sounds/FIGHT.mp3" id="10_hve3p"]
-[ext_resource type="Texture2D" uid="uid://btxm0wgvfbltp" path="res://images/stone1.png" id="11_mfdv2"]
+[ext_resource type="PackedScene" uid="uid://e48wskl8rmnf" path="res://stone.tscn" id="11_mfdv2"]
+[ext_resource type="AudioStream" uid="uid://cl5uvkl1ddp7t" path="res://music/go-wild-15153.mp3" id="12_iotsf"]
+[ext_resource type="AudioStream" uid="uid://d2p17um1wy3w2" path="res://sounds/desert-binaural-wind-5976.mp3" id="13_lc2xo"]
+
+[sub_resource type="Animation" id="Animation_lc2xo"]
+resource_name = "Start"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Player:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(3.16667, 3.66667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Player2:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(3.16667, 3.66667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ColorRect:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_215e1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Player:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Player2:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ColorRect:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_215e1"]
+_data = {
+&"RESET": SubResource("Animation_215e1"),
+&"Start": SubResource("Animation_lc2xo")
+}
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_7jktm")
@@ -51,6 +138,12 @@ move_down_action = "P1Down"
 fire_action = "P1Fire"
 reload_action = "P1Reload"
 
+[node name="Stone" parent="." instance=ExtResource("11_mfdv2")]
+position = Vector2(69, 104)
+
+[node name="Stone2" parent="." instance=ExtResource("11_mfdv2")]
+position = Vector2(249, 58)
+
 [node name="ScoreLabel" type="Label" parent="."]
 offset_left = -3.0
 offset_top = 2.0
@@ -74,9 +167,25 @@ offset_bottom = 187.0
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -6.0
+offset_top = -6.0
+offset_right = 358.0
+offset_bottom = 206.0
+color = Color(0, 0, 0, 1)
+
 [node name="Fight" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("10_hve3p")
 
-[node name="Stone1" type="Sprite2D" parent="."]
-position = Vector2(87, 81)
-texture = ExtResource("11_mfdv2")
+[node name="StartAnimation" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_215e1")
+}
+autoplay = "Start"
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_iotsf")
+
+[node name="BackgroundSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_lc2xo")
+autoplay = true
