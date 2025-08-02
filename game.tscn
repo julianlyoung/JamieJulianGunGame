@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b3y10a5jp3i1a"]
+[gd_scene load_steps=12 format=3 uid="uid://b3y10a5jp3i1a"]
 
 [ext_resource type="Script" uid="uid://bfqb8tg57yul8" path="res://game.gd" id="1_7jktm"]
 [ext_resource type="PackedScene" uid="uid://nueeyp77c7qi" path="res://player.tscn" id="1_80nbo"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://8gt3sdh001m5" path="res://gun.tscn" id="7_hve3p"]
 [ext_resource type="Texture2D" uid="uid://bhqiydjscu6ls" path="res://images/player1dead.png" id="7_j5wjh"]
 [ext_resource type="AudioStream" uid="uid://d4a441ngj16o6" path="res://sounds/FIGHT.mp3" id="10_hve3p"]
+[ext_resource type="Texture2D" uid="uid://btxm0wgvfbltp" path="res://images/stone1.png" id="11_mfdv2"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_7jktm")
@@ -75,3 +76,7 @@ vertical_alignment = 1
 
 [node name="Fight" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("10_hve3p")
+
+[node name="Stone1" type="Sprite2D" parent="."]
+position = Vector2(87, 81)
+texture = ExtResource("11_mfdv2")

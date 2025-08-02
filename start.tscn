@@ -1,0 +1,45 @@
+[gd_scene load_steps=2 format=3 uid="uid://bq4of25ui1kkb"]
+
+[ext_resource type="Texture2D" uid="uid://cn1lbx6pfh33v" path="res://images/splash.png" id="1_ots34"]
+
+[node name="Start" type="Node2D"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 331.0
+offset_bottom = 181.0
+texture = ExtResource("1_ots34")
+expand_mode = 1
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 321.0
+offset_bottom = 182.0
+
+[node name="credits" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = -65.0
+offset_top = 154.0
+offset_right = 378.0
+offset_bottom = 172.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 12
+text = "Music by Anastasia Chubarova from Pixabay   |  Graphics Jamie-Lee Martin  |  Coding Julian Young"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="starttext" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 122.0
+offset_right = 330.0
+offset_bottom = 142.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 23
+text = "JOY1 FIRE TO START"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]

@@ -23,6 +23,11 @@ window/size/viewport_height=180
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 
+[gui]
+
+fonts/dynamic_fonts/use_oversampling=false
+theme/custom_font="uid://d3l1pwraekckq"
+
 [input]
 
 P1Left={
