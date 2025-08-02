@@ -26,6 +26,9 @@ var countdown_label: Label
 var player1: CharacterBody2D
 var player2: CharacterBody2D
 
+# PowerUp spawner reference
+var powerup_spawner: PowerUpSpawner
+
 # Timers
 var state_timer: float = 0.0
 
@@ -35,6 +38,9 @@ func _ready() -> void:
 	
 	# Connect signals
 	connect_player_signals()
+	
+	# Create powerup spawner
+	setup_powerup_spawner()
 	
 	# Start first round
 	await get_tree().process_frame  # Wait one frame for everything to be ready
@@ -49,6 +55,16 @@ func find_game_elements() -> void:
 	# Find players
 	player1 = get_node("Player") as CharacterBody2D
 	player2 = get_node("Player2") as CharacterBody2D
+
+func setup_powerup_spawner() -> void:
+	# Create powerup spawner node
+	powerup_spawner = PowerUpSpawner.new()
+	powerup_spawner.name = "PowerUpSpawner"
+	
+	# Load powerup scene
+	powerup_spawner.powerup_scene = preload("res://powerup.tscn")
+	
+	add_child(powerup_spawner)
 
 func connect_player_signals() -> void:
 	if player1 and player1.has_signal("player_died"):
@@ -90,6 +106,10 @@ func _handle_restarting(delta: float) -> void:
 func start_new_round() -> void:
 	current_state = GameState.ROUND_STARTING
 	state_timer = round_start_delay
+	
+	# Clear powerups
+	if powerup_spawner:
+		powerup_spawner.clear_all_powerups()
 	
 	# Reset players
 	reset_players()

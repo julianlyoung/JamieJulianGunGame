@@ -24,7 +24,7 @@ texture = ExtResource("2_eow3j")
 expand_mode = 1
 
 [node name="Player2" parent="." instance=ExtResource("1_80nbo")]
-position = Vector2(220, 108)
+position = Vector2(307, 166)
 hat_scene = ExtResource("4_vef74")
 gun_scene = ExtResource("7_hve3p")
 sprite_texture = ExtResource("3_fc0e3")
@@ -38,7 +38,7 @@ fire_action = "P2Fire"
 reload_action = "P2Reload"
 
 [node name="Player" parent="." instance=ExtResource("1_80nbo")]
-position = Vector2(99, 108)
+position = Vector2(10, 13)
 hat_scene = ExtResource("4_vef74")
 gun_scene = ExtResource("7_hve3p")
 sprite_texture = ExtResource("4_7jktm")
