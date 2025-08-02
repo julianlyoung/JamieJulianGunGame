@@ -50,6 +50,8 @@ var facing_right: bool = false
 var click_player: AudioStreamPlayer2D
 var fire_player: AudioStreamPlayer2D
 var reload_player: AudioStreamPlayer2D
+var dead_player: AudioStreamPlayer2D
+
 var area_2d: Area2D
 
 func _ready() -> void:
@@ -64,6 +66,8 @@ func _ready() -> void:
 	click_player = $ClickPlayer as AudioStreamPlayer2D
 	fire_player = $FirePlayer as AudioStreamPlayer2D
 	reload_player = $ReloadPlayer as AudioStreamPlayer2D
+	dead_player = $DeadPlayer as AudioStreamPlayer2D
+	
 	area_2d = $Area2D as Area2D
 	
 	# Apply texture if one is set
@@ -189,6 +193,7 @@ func take_hit(bullet: Bullet = null) -> void:
 	
 	# Emit death signal
 	player_died.emit()
+	$DeadPlayer.play()
 
 func _launch_gun(bullet: Bullet = null) -> void:
 	var gun: Gun = gun_scene.instantiate() as Gun

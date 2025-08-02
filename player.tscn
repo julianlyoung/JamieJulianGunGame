@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://nueeyp77c7qi"]
+[gd_scene load_steps=9 format=3 uid="uid://nueeyp77c7qi"]
 
 [ext_resource type="Script" uid="uid://tjm6rgqcplpp" path="res://player.gd" id="1_i3pqv"]
 [ext_resource type="PackedScene" uid="uid://d2jixk5ydtrj2" path="res://bullet.tscn" id="2_hqtel"]
@@ -6,6 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://d1226s5qfworu" path="res://sounds/Reload.mp3" id="4_hqtel"]
 [ext_resource type="AudioStream" uid="uid://c3d2iiq5uld15" path="res://sounds/GunClick.mp3" id="5_sweqy"]
 [ext_resource type="AudioStream" uid="uid://ouurt7xo2pwq" path="res://sounds/gunshot1.mp3" id="6_2hs0m"]
+[ext_resource type="AudioStream" uid="uid://baql5oy2hje4b" path="res://sounds/dead.mp3" id="7_1jxqw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e2o6t"]
 size = Vector2(9, 18)
@@ -33,3 +34,6 @@ stream = ExtResource("5_sweqy")
 
 [node name="FirePlayer" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("6_2hs0m")
+
+[node name="DeadPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_1jxqw")

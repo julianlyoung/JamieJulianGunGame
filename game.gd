@@ -97,6 +97,7 @@ func start_new_round() -> void:
 	
 	# Update UI
 	round_label.text = "ROUND " + str(current_round) + " - FIGHT!"
+	$Fight.play()
 	update_score_display()
 	countdown_label.text = ""
 
