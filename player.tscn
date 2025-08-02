@@ -8,7 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://ouurt7xo2pwq" path="res://sounds/gunshot1.mp3" id="6_2hs0m"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e2o6t"]
-size = Vector2(124, 124)
+size = Vector2(9, 18)
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_i3pqv")
@@ -20,6 +20,7 @@ texture = ExtResource("3_sweqy")
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_e2o6t")
 
 [node name="ReloadPlayer" type="AudioStreamPlayer2D" parent="."]

@@ -1,0 +1,32 @@
+[gd_scene load_steps=2 format=3 uid="uid://b3y10a5jp3i1a"]
+
+[ext_resource type="PackedScene" uid="uid://nueeyp77c7qi" path="res://player.tscn" id="1_80nbo"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="TextureRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 324.0
+offset_bottom = 245.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Player2" parent="." instance=ExtResource("1_80nbo")]
+position = Vector2(294, 178)
+move_left_action = "P2Left"
+move_right_action = "P2Right"
+move_up_action = "P2Up"
+move_down_action = "P2Down"
+fire_action = "P2Fire"
+reload_action = "P2Reload"
+
+[node name="Player" parent="." instance=ExtResource("1_80nbo")]
+position = Vector2(147, 89)
+move_left_action = "P1Left"
+move_right_action = "P1Right"
+move_up_action = "P1Up"
+move_down_action = "P1Down"
+fire_action = "P1Fire"
+reload_action = "P1Reload"
