@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://b3y10a5jp3i1a"]
+[gd_scene load_steps=18 format=3 uid="uid://b3y10a5jp3i1a"]
 
 [ext_resource type="Script" uid="uid://bfqb8tg57yul8" path="res://game.gd" id="1_7jktm"]
 [ext_resource type="PackedScene" uid="uid://nueeyp77c7qi" path="res://player.tscn" id="1_80nbo"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://bhqiydjscu6ls" path="res://images/player1dead.png" id="7_j5wjh"]
 [ext_resource type="AudioStream" uid="uid://d4a441ngj16o6" path="res://sounds/FIGHT.mp3" id="10_hve3p"]
 [ext_resource type="PackedScene" uid="uid://e48wskl8rmnf" path="res://stone.tscn" id="11_mfdv2"]
+[ext_resource type="AudioStream" uid="uid://djci6js2e2y6y" path="res://music/saloon-piano-ragtime-retro-vintage-jazz-comedy-music-110970.mp3" id="12_215e1"]
 [ext_resource type="AudioStream" uid="uid://cl5uvkl1ddp7t" path="res://music/go-wild-15153.mp3" id="12_iotsf"]
 [ext_resource type="AudioStream" uid="uid://d2p17um1wy3w2" path="res://sounds/desert-binaural-wind-5976.mp3" id="13_lc2xo"]
 
@@ -183,8 +184,12 @@ libraries = {
 }
 autoplay = "Start"
 
+[node name="MusicWin" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_215e1")
+
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("12_iotsf")
+volume_db = -7.963
 
 [node name="BackgroundSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("13_lc2xo")

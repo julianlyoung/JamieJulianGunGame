@@ -162,6 +162,9 @@ func end_game() -> void:
 	state_timer = game_restart_countdown
 	
 	game_ended.emit(winner)
+	$Music.stop()
+	$MusicWin.play()
+	
 
 func restart_game() -> void:
 	current_round = 1
@@ -170,6 +173,7 @@ func restart_game() -> void:
 	current_state = GameState.WAITING
 	countdown_label.text = ""
 	start_new_round()
+	$MusicWin.stop()
 
 func reset_players() -> void:
 	if player1:
