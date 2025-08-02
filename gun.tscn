@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://d1iysvojayjmp" path="res://gun.gd" id="1_vk1bi"]
 
 [node name="Gun" type="Node2D"]
+script = ExtResource("1_vk1bi")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_dk5gl")
-script = ExtResource("1_vk1bi")

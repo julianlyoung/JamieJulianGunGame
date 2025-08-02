@@ -106,6 +106,9 @@ func _physics_process(delta: float) -> void:
 	
 	velocity = input_vector
 	move_and_slide()
+	
+	# Apply movement boundaries after movement
+	_apply_movement_boundaries()
 
 func _process(delta: float) -> void:
 	if not alive or not can_move:
@@ -230,3 +233,22 @@ func reset_for_new_round() -> void:
 
 func set_can_move(enabled: bool) -> void:
 	can_move = enabled
+
+func _apply_movement_boundaries() -> void:
+	# Map boundaries (based on the TextureRect in game.tscn)
+	var map_left: float = 10.0  # Left boundary with padding
+	var map_right: float = 310.0  # Right boundary with padding
+	var map_top: float = 10.0  # Top boundary with padding
+	var map_bottom: float = 175.0  # Bottom boundary with padding
+	var map_center_x: float = 160.0  # Center divide
+	
+	# Apply vertical boundaries (same for both players)
+	global_position.y = clamp(global_position.y, map_top, map_bottom)
+	
+	# Apply horizontal boundaries based on player
+	if player_number == 1:
+		# Player 1 confined to left side
+		global_position.x = clamp(global_position.x, map_left, map_center_x - 5.0)
+	else:
+		# Player 2 confined to right side
+		global_position.x = clamp(global_position.x, map_center_x + 5.0, map_right)
